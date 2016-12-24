@@ -14,6 +14,7 @@ startup
 init
 {
 	vars.split = 0;
+	vars.lastSymbol = (char) 0;
 }
 
 start
@@ -35,50 +36,59 @@ reset
 
 split
 {
-	if (vars.split == 0 && old.Stars < current.Stars)
-	{
-		char[] separators = {'(', ')', '[', ']'};
-
+	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
-		String splitStarCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
+		char lastSymbol = splitName.Last();	
 		
-		int splitStarCount = -1;
-		Int32.TryParse(splitStarCounts, out splitStarCount);
-		char lastSymbol = splitName.Last();
+		if (lastSymbol == ')' && old.Stars < current.Stars)
+		{
+			print("Star trigger!");
+			char[] separators = {'(', ')', '[', ']'};
+
+			String splitStarCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
 		
-		if (lastSymbol == ')' && splitStarCount == current.Stars)
+			int splitStarCount = -1;
+			Int32.TryParse(splitStarCounts, out splitStarCount);
+			
+			if (splitStarCount == current.Stars)
+				vars.split = 1;
+		}
+		else if (lastSymbol == ']' && old.level != current.level)
+		{
+			print("Level trigger!");
+			char[] separators = {'(', ')', '[', ']'};
+
+			String splitLevelCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
+		
+			int splitLevelCount = -1;
+			Int32.TryParse(splitLevelCounts, out splitLevelCount);
+			
+			if (splitLevelCount == current.level)
+				vars.split = 1;		
+		}
+		else if (lastSymbol == '!' && old.music != current.music)
+		{
+			print("Music trigger!");
+			if (current.music == 0)
+				return true;
+		}
+		else if (lastSymbol == '*' && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
+		{
+			print("Anim trigger!");	
 			vars.split = 1;
-	}else
-	if (vars.split == 0 && old.level != current.level)
-	{
-		char[] separators = {'(', ')', '[', ']'};
-
-		String splitName = timer.CurrentSplit.Name;
-		String splitLevelCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
-		
-		int splitLevelCount = -1;
-		Int32.TryParse(splitLevelCounts, out splitLevelCount);
-		char lastSymbol = splitName.Last();
-	
-		if (lastSymbol == ']' && splitLevelCount == current.level)
-			vars.split = 1;		
-	}else
-	if (vars.split == 0 && old.music != current.music){
-		String splitName = timer.CurrentSplit.Name;
-		char lastSymbol = splitName.Last();
-	
-		if (lastSymbol == '*' && current.music == 0)
-			return true;
+		}
 	}
 
-	if (vars.split > 0)
+	if (vars.split == 1)
 	{
-		//print(current.anim.ToString());
-		if (current.level != old.level || (old.anim != current.anim && old.anim == 4864)){ //Level switching == 4864
+		if (current.level != old.level || (old.anim != current.anim && old.anim == 4864)){ //Level switching animation == 4864
 			vars.split = 0;
 			return true;
 		}
 	}
+	
+	if (vars.split > 1)
+		vars.split--;
 }
 
 isLoading
