@@ -10,3 +10,9 @@ Right Click on LiveSplit, select _Edit Layout..._. In appeared window press _+_ 
 [LEVEL_NUMBER]: Split will be fired on fadeout on enter to LEVEL_NUMBER.
 
 *: Split will be fired when music stops (might not work if music just changes)
+
+#Script Example
+I have made an example for Last Impact 20 star splits. One can find them here: https://splits.io/10hx.
+
+#TODO
+Add tutorial on finding LEVEL_NUMBER
