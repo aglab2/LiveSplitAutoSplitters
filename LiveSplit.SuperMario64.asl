@@ -3,6 +3,7 @@ state("project64")
 	byte Stars : 0xD6A1C, 0x33B218;
 	byte level : "Project64.exe", 0xD6A1C, 0x32DDFA;
 	byte music : "Project64.exe", 0xD6A1C, 0x22261E;
+	int anim: "Project64.exe", 0xD6A1C, 0x33B17C;
 }
 
 startup
@@ -72,7 +73,8 @@ split
 
 	if (vars.split > 0)
 	{
-		if (current.level != old.level){
+		//print(current.anim.ToString());
+		if (current.level != old.level || (old.anim != current.anim && old.anim == 4864)){ //Level switching == 4864
 			vars.split = 0;
 			return true;
 		}
