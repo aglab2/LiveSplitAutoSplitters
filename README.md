@@ -16,3 +16,4 @@ I have made an example for Last Impact [20 star splits](https://splits.io/10hx).
 
 #TODO
 Add tutorial on finding LEVEL_NUMBER
+Add support for pj64 1.7
