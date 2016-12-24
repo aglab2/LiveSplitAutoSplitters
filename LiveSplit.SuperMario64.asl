@@ -1,9 +1,13 @@
 state("project64")
 {
-	byte Stars      : 0xD6A1C, 0x33B218;
-	int  GameFrames : 0xD6A1C, 0x32D5D4;
+	byte Stars : 0xD6A1C, 0x33B218;
 	byte level : "Project64.exe", 0xD6A1C, 0x32DDFA;
 	byte music : "Project64.exe", 0xD6A1C, 0x22261E;
+}
+
+startup
+{
+    settings.Add("LI", false, "Enable Last Impact start mode");
 }
 
 init
@@ -14,12 +18,18 @@ init
 start
 {
 	vars.split = 0;
-	//return (old.level == 35 && current.level == 16);
+	if (settings["LI"])
+		return (old.level == 35 && current.level == 16);
+	else
+		return (current.level == 1);
 }
 
 reset
 {
-	//return (old.level == 35 && current.level == 16 && current.Stars == 0);
+	if (settings["LI"])
+		return (old.level == 35 && current.level == 16 && current.Stars == 0);
+	else
+		return (current.level == 1 && old.level != current.level);		
 }
 
 split
