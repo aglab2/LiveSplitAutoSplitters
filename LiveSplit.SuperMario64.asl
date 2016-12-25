@@ -4,6 +4,7 @@ state("project64")
 	byte level : "Project64.exe", 0xD6A1C, 0x32DDFA;
 	byte music : "Project64.exe", 0xD6A1C, 0x22261E;
 	int anim: "Project64.exe", 0xD6A1C, 0x33B17C;
+	int time: "Project64.exe", 0xD6A1C, 0x32D580;
 }
 
 startup
@@ -23,7 +24,7 @@ start
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16);
 	else
-		return (current.level == 1);
+		return (current.level == 1 && old.time > current.time);
 }
 
 reset
@@ -31,7 +32,7 @@ reset
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
 	else
-		return (current.level == 1 && old.level != current.level);		
+		return (current.level == 1 && old.time > current.time);		
 }
 
 split
