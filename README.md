@@ -12,7 +12,7 @@ Download autosplitter file from repository using Raw button [link](https://raw.g
 *: Split will be fired when music stops (might not work if music just changes)
 
 #Script Example
-I have made an example for Last Impact [20 star splits](https://splits.io/10hx).
+I have made an example for Last Impact [20 star splits](https://splits.io/10je).
 
 #TODO
 Add tutorial on finding LEVEL_NUMBER
