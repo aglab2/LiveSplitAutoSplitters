@@ -75,7 +75,7 @@ split
 		else if (lastSymbol == '*' && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
 		{
 			print("Anim trigger!");	
-			vars.split = 1;
+			vars.split = 5;
 		}
 	}
 
