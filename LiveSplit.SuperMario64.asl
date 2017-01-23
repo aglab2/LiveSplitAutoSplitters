@@ -39,7 +39,8 @@ split
 {
 	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
-		char lastSymbol = splitName.Last();	
+		char lastSymbol = splitName.Last();
+		bool isKeySplit = splitName.ToLower().IndexOf("key") != -1;
 		
 		if (lastSymbol == ')' && old.Stars < current.Stars)
 		{
@@ -51,9 +52,9 @@ split
 			int splitStarCount = -1;
 			Int32.TryParse(splitStarCounts, out splitStarCount);
 			
-			if (splitStarCount == current.Stars)
+			if (splitStarCount == current.Stars && !isKeySplit) //Postpone key split to later
 				vars.split = 1;
-		}
+		} 
 		else if (lastSymbol == ']' && old.level != current.level)
 		{
 			print("Level trigger!");
@@ -77,6 +78,19 @@ split
 		{
 			print("Anim trigger!");	
 			vars.split = 5;
+		}
+		else if (isKeySplit && old.anim != current.anim && current.anim == 4866)
+		{
+			print("Key split trigger!");
+			char[] separators = {'(', ')', '[', ']'};
+
+			String splitStarCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
+		
+			int splitStarCount = -1;
+			Int32.TryParse(splitStarCounts, out splitStarCount);
+			
+			if (splitStarCount == current.Stars)
+				vars.split = 5;
 		}
 	}
 
