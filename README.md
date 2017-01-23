@@ -9,7 +9,7 @@ Download autosplitter file from repository using Raw button [link](https://raw.g
 
 [LEVEL_NUMBER]: Split will be fired on fadeout on enter to LEVEL_NUMBER.
 
-*: Split will be fired when music stops (might not work if music just changes)
+*: Split will be fired on key/troll star grab
 
 #Script Example
 I have made an example for Last Impact [20 star splits](https://splits.io/10je).
