@@ -5,7 +5,7 @@ This ASL script use notation in splits to detect time to split. All special symb
 Download autosplitter file from repository using Raw button [link](https://raw.githubusercontent.com/aglab2/LiveSplitAutoSplitters/master/LiveSplit.SuperMario64.asl). Right Click on LiveSplit, select _Edit Layout..._. In appeared window press _+_ button, choose _Control_ > _Scriptable Auto Splitter_. Double left click on _Scriptable Auto Splitter_ item and choose script path with _Browse..._ button. Depending on hack, check Last Impact start mode. 
 
 #List of special symbols:
-(STAR_COUNT): Split will be fired on fadeout after STAR_COUNT.
+(STAR_COUNT): Split will be fired on fadeout after STAR_COUNT. Put "key" keyword anywhere in split name (for example: "Shadow Mario Key (20)") to fire split on key get rather then 20th star get.
 
 [LEVEL_NUMBER]: Split will be fired on fadeout on enter to LEVEL_NUMBER.
 
