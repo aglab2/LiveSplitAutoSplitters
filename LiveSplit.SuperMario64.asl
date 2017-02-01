@@ -15,6 +15,7 @@ startup
 init
 {
 	vars.split = 0;
+	vars.delay = -1;
 	vars.lastSymbol = (char) 0;
 }
 
@@ -28,11 +29,13 @@ start
 }
 
 reset
-{
-	if (settings["LI"])
+{ 
+	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
-	else
-		return (current.level == 1 && old.time > current.time);		
+	}else if (current.level == 1 && old.time > current.time){
+		vars.delay = 100;
+		return true;
+	}
 }
 
 split
@@ -105,6 +108,36 @@ split
 	
 	if (vars.split > 1)
 		vars.split--;
+}
+
+update
+{
+	if (vars.delay == -1)
+		return;
+	if (vars.delay > 0)
+	{
+		vars.delay--;
+	}
+	else
+	{
+		byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
+		//DeepPointer fileA = new DeepPointer("Project64.exe", 0xD6A1C, 0x207708); //TODO: this is better solution
+        IntPtr ptr;
+		
+		var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "project64.exe");
+		ptr = module.BaseAddress + 0xD6A1C;
+		if (!game.ReadPointer(ptr, false, out ptr) || ptr == IntPtr.Zero)
+        {
+            print("readptr fail");
+        }
+		ptr += 0x207708;
+		print(ptr.ToString());
+        if (!game.WriteBytes(ptr, data))
+        {
+            print("write fail");
+        }
+		vars.delay = -1;
+	}
 }
 
 isLoading
