@@ -11,6 +11,9 @@ Download autosplitter file from repository using Raw button [link](https://raw.g
 
 *: Split will be fired on key/troll star grab
 
+#Making advanced splits
+You can use [this program](https://github.com/aglab2/LiveSplitAutoSplitters/blob/master/Helper.exe?raw=true) to create splits that will fire on entering specific level. Read more about it in tutorial in program.
+
 #Script Example
 I have made an example for Last Impact [20 star splits](https://splits.io/10je).
 
