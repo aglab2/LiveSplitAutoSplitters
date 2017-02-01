@@ -17,6 +17,8 @@ init
 	vars.split = 0;
 	vars.delay = -1;
 	vars.lastSymbol = (char) 0;
+	
+	vars.errorCode = 0;
 }
 
 start
@@ -33,7 +35,7 @@ reset
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
 	}else if (current.level == 1 && old.time > current.time){
-		vars.delay = 100;
+		vars.delay = 120;
 		return true;
 	}
 }
@@ -126,15 +128,17 @@ update
 		
 		var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "project64.exe");
 		ptr = module.BaseAddress + 0xD6A1C;
+		
 		if (!game.ReadPointer(ptr, false, out ptr) || ptr == IntPtr.Zero)
         {
-            print("readptr fail");
+			vars.errorCode |= 1;
+		    print("readptr fail");
         }
 		ptr += 0x207708;
-		print(ptr.ToString());
         if (!game.WriteBytes(ptr, data))
-        {
-            print("write fail");
+        { 
+			vars.errorCode |= 2;
+		    print("write fail");
         }
 		vars.delay = -1;
 	}
@@ -142,6 +146,11 @@ update
 
 isLoading
 {
-	return false;
+	return true;
+}
+
+gameTime
+{
+	return new TimeSpan(vars.errorCode, 0, 0);
 }
 
