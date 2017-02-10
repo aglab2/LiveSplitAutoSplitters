@@ -10,6 +10,7 @@ state("project64")
 startup
 {
     settings.Add("LI", false, "Enable Last Impact start mode");
+	settings.Add("DelA", false, "Delete File A on game reset");
 }
 
 init
@@ -31,11 +32,12 @@ start
 }
 
 reset
-{ 
+{
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
 	}else if (current.level == 1 && old.time > current.time){
-		vars.delay = 120;
+		if (settings["DelA"])
+			vars.delay = 120;
 		return true;
 	}
 }
