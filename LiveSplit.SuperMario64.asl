@@ -36,8 +36,6 @@ reset
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
 	}else if (current.level == 1 && old.time > current.time){
-		if (settings["DelA"])
-			vars.delay = 120;
 		return true;
 	}
 }
@@ -117,13 +115,7 @@ split
 
 update
 {
-	if (vars.delay == -1)
-		return;
-	if (vars.delay > 0)
-	{
-		vars.delay--;
-	}
-	else
+	if (settings["DelA"] && current.time > 60 && current.time < 200)
 	{
 		byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
 		//DeepPointer fileA = new DeepPointer("Project64.exe", 0xD6A1C, 0x207708); //TODO: this is better solution
