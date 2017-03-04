@@ -11,6 +11,7 @@ startup
 {
     settings.Add("LI", false, "Enable Last Impact start mode");
 	settings.Add("DelA", false, "Delete File A on game reset");
+	settings.Add("LastSplit", true, "Split on final split when Grand Star or regular star was grabbed");
 }
 
 init
@@ -47,11 +48,16 @@ split
 		char lastSymbol = splitName.Last();
 		bool isKeySplit = splitName.ToLower().IndexOf("key") != -1;
 		
-		if (lastSymbol == ')' && old.Stars < current.Stars)
+		if (timer.Run.Count - 1 == timer.CurrentSplitIndex && (current.anim == 6409 || current.anim == 6404))
+		{
+			if (settings["LastSplit"])
+				return true;
+		}
+		else if (lastSymbol == ')' && old.Stars < current.Stars)
 		{
 			print("Star trigger!");
 			char[] separators = {'(', ')', '[', ']'};
-
+ 
 			String splitStarCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
 		
 			int splitStarCount = -1;
