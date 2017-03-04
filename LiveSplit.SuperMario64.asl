@@ -104,7 +104,8 @@ split
 	if (vars.split == 1)
 	{
 		String splitName = timer.CurrentSplit.Name;
-		if (current.level != old.level || (old.anim != current.anim && old.anim == 4866) || (old.anim != current.anim && old.anim == 4871)){
+		print(current.anim.ToString()); 
+		if (current.level != old.level || (old.anim != current.anim && old.anim == 4866) || (old.anim != current.anim && old.anim == 4867) || (old.anim != current.anim && old.anim == 4871)){
 			vars.split = 0;
 			return true;
 		}
