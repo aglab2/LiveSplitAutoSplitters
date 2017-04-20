@@ -43,12 +43,13 @@ reset
 
 split
 {
+	//print(current.anim.ToString());
 	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
 		char lastSymbol = splitName.Last();
 		bool isKeySplit = splitName.ToLower().IndexOf("key") != -1;
 		
-		if (timer.Run.Count - 1 == timer.CurrentSplitIndex && (current.anim == 6409 || current.anim == 6404))
+		if (timer.Run.Count - 1 == timer.CurrentSplitIndex && (current.anim == 6409 || current.anim == 6404 || current.anim == 4866 || current.anim == 4871))
 		{
 			if (settings["LastSplit"])
 				return true;
@@ -109,14 +110,17 @@ split
 	{
 		String splitName = timer.CurrentSplit.Name;
 		print(current.anim.ToString()); 
-		if (current.level != old.level || (old.anim != current.anim && old.anim == 4866) || (old.anim != current.anim && old.anim == 4867) || (old.anim != current.anim && old.anim == 4871)){
-			vars.split = 0;
+		if (current.level != old.level || (old.anim != current.anim && old.anim == 4866) || (old.anim != current.anim && old.anim == 4867) || (old.anim != current.anim && old.anim == 4871) || (old.anim != current.anim && old.anim == 4866)){
+			vars.split = -20;
 			return true;
 		}
 	}
 	
 	if (vars.split > 1)
 		vars.split--;
+		
+	if (vars.split < 0)
+		vars.split++;
 }
 
 update
