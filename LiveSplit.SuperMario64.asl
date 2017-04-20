@@ -88,7 +88,7 @@ split
 		else if (isKeySplit && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
 		{
 			print("Key split trigger!");
-			char[] separators = {'(', ')', '[', ']'};
+			char[] separators = {'(', ')', '[', ']', '*'};
 
 			String splitStarCounts = splitName.Split(separators, StringSplitOptions.RemoveEmptyEntries).Last();
 		
