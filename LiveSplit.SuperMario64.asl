@@ -46,7 +46,7 @@ split
 	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
 		char lastSymbol = splitName.Last();
-		bool isKeySplit = splitName.ToLower().IndexOf("key") != -1;
+		bool isKeySplit = (splitName.ToLower().IndexOf("key") != -1) || (lastSymbol == '*');
 		
 		if (timer.Run.Count - 1 == timer.CurrentSplitIndex && (current.anim == 6409 || current.anim == 6404))
 		{
@@ -85,12 +85,7 @@ split
 			if (current.music == 0)
 				return true;
 		}
-		else if (lastSymbol == '*' && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
-		{
-			print("Anim trigger!");	
-			vars.split = 5;
-		}
-		else if (isKeySplit && old.anim != current.anim && current.anim == 4866)
+		else if (isKeySplit && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
 		{
 			print("Key split trigger!");
 			char[] separators = {'(', ')', '[', ']'};
