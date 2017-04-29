@@ -120,8 +120,9 @@ split
 
 update
 {
-	if (settings["DelA"] && current.time > 60 && current.time < 200)
+	if (settings["DelA"] && current.time < 200)
 	{
+		vars.split = 0;
 		byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
 		//DeepPointer fileA = new DeepPointer("Project64.exe", 0xD6A1C, 0x207708); //TODO: this is better solution
         IntPtr ptr;
