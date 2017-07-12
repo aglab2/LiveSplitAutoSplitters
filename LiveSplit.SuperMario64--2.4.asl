@@ -1,11 +1,10 @@
 state("project64")
 {
-	byte Stars : 0xD6A1C, 0x33B218;
-	byte level : "Project64.exe", 0xD6A1C, 0x32DDFA;
-	byte music : "Project64.exe", 0xD6A1C, 0x22261E;
-	int anim: "Project64.exe", 0xD6A1C, 0x33B17C;
-	int time: "Project64.exe", 0xD6A1C, 0x32D580;
-	byte isPaused: "Project64.exe", 0xD75E4;
+	byte Stars : "RSP 1.7.dll", 0x4C054, 0x33B218;
+	byte level : "RSP 1.7.dll", 0x4C054, 0x32DDFA;
+	byte music : "RSP 1.7.dll", 0x4C054, 0x22261E;
+	int anim: "RSP 1.7.dll", 0x4C054, 0x33B17C;
+	int time: "RSP 1.7.dll", 0x4C054, 0x32D580;
 }
 
 startup
@@ -22,6 +21,9 @@ init
 	vars.lastSymbol = (char) 0;
 	
 	vars.errorCode = 0;
+	
+	vars.ResetIGTFixup = 0;
+	refreshRate = 60;
 }
 
 start
@@ -44,7 +46,7 @@ reset
 
 split
 {
-	//print(current.time.ToString());
+	//print(current.anim.ToString());
 	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
 		char lastSymbol = splitName.Last();
@@ -124,11 +126,11 @@ update
 	{
 		vars.split = 0;
 		byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
-		//DeepPointer fileA = new DeepPointer("Project64.exe", 0xD6A1C, 0x207708); //TODO: this is better solution
+		//DeepPointer fileA = new DeepPointer("RSP 1.7.dll", 0x4C054, 0x207708); //TODO: this is better solution
         IntPtr ptr;
 		
-		var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "project64.exe");
-		ptr = module.BaseAddress + 0xD6A1C;
+		var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "rsp 1.7.dll");
+		ptr = module.BaseAddress + 0x4C054;
 		
 		if (!game.ReadPointer(ptr, false, out ptr) || ptr == IntPtr.Zero)
         {
@@ -147,35 +149,28 @@ update
 
 isLoading
 {
-	return current.isPaused == 0;
+	return true;
 }
 
 gameTime
 {
-	if (current.isPaused == 0) 
-	{
-		int relaxMilliseconds = 5000;
-		int relaxFrames = relaxMilliseconds * 60 / 1000;
+	int relaxMilliseconds = 5000;
+	int relaxFrames = relaxMilliseconds * 60 / 1000;
 	
-		try{
-			if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
-				if (current.time < old.time) //Reset happened 
-				{ 
-					vars.ResetIGTFixup += old.time;
-				}
-			}else{
-				vars.ResetIGTFixup = 0;
-				if (current.time > relaxFrames)
-					return TimeSpan.FromMilliseconds(0); 
+	try{
+		if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
+			if (current.time < old.time) //Reset happened 
+			{ 
+				vars.ResetIGTFixup += old.time;
 			}
-		}catch(Exception) {
+		}else{
 			vars.ResetIGTFixup = 0;
+			if (current.time > relaxFrames)
+				return TimeSpan.FromMilliseconds(0); 
 		}
+	}catch(Exception) {
+		vars.ResetIGTFixup = 0;
+	}
 	
-		return TimeSpan.FromMilliseconds((vars.ResetIGTFixup + current.time) * 1000 / 60);
-	}
-	else
-	{
-		vars.ResetIGTFixup = timer.CurrentTime.GameTime.Value.TotalSeconds * 60 - current.igt;
-	}
+	return TimeSpan.FromMilliseconds((vars.ResetIGTFixup + current.time) * 1000 / 60);
 }

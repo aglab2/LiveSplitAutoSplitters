@@ -1,11 +1,10 @@
 state("project64")
 {
-	byte Stars : 0xD6A1C, 0x33B218;
-	byte level : "Project64.exe", 0xD6A1C, 0x32DDFA;
-	byte music : "Project64.exe", 0xD6A1C, 0x22261E;
-	int anim: "Project64.exe", 0xD6A1C, 0x33B17C;
-	int time: "Project64.exe", 0xD6A1C, 0x32D580;
-	byte isPaused: "Project64.exe", 0xD75E4;
+	byte Stars : "RSP 1.7.dll", 0x44B5C, 0x33B218;
+	byte level : "RSP 1.7.dll", 0x44B5C, 0x32DDFA;
+	byte music : "RSP 1.7.dll", 0x44B5C, 0x22261E;
+	int anim: "RSP 1.7.dll", 0x44B5C, 0x33B17C;
+	int time: "RSP 1.7.dll", 0x44B5C, 0x32D580;
 }
 
 startup
@@ -44,7 +43,7 @@ reset
 
 split
 {
-	//print(current.time.ToString());
+	//print(current.anim.ToString());
 	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
 		char lastSymbol = splitName.Last();
@@ -147,35 +146,11 @@ update
 
 isLoading
 {
-	return current.isPaused == 0;
+	return true;
 }
 
 gameTime
 {
-	if (current.isPaused == 0) 
-	{
-		int relaxMilliseconds = 5000;
-		int relaxFrames = relaxMilliseconds * 60 / 1000;
-	
-		try{
-			if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
-				if (current.time < old.time) //Reset happened 
-				{ 
-					vars.ResetIGTFixup += old.time;
-				}
-			}else{
-				vars.ResetIGTFixup = 0;
-				if (current.time > relaxFrames)
-					return TimeSpan.FromMilliseconds(0); 
-			}
-		}catch(Exception) {
-			vars.ResetIGTFixup = 0;
-		}
-	
-		return TimeSpan.FromMilliseconds((vars.ResetIGTFixup + current.time) * 1000 / 60);
-	}
-	else
-	{
-		vars.ResetIGTFixup = timer.CurrentTime.GameTime.Value.TotalSeconds * 60 - current.igt;
-	}
+	return new TimeSpan(vars.errorCode, 0, 0);
 }
+
