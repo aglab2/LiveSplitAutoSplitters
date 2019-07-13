@@ -1,10 +1,10 @@
 state("project64")
 {
-	byte Stars : "RSP 1.7.dll", 0x4C054, 0x33B218;
-	byte level : "RSP 1.7.dll", 0x4C054, 0x32DDFA;
-	byte music : "RSP 1.7.dll", 0x4C054, 0x22261E;
-	int anim: "RSP 1.7.dll", 0x4C054, 0x33B17C;
-	int time: "RSP 1.7.dll", 0x4C054, 0x32D580;
+	byte Stars : "RSP 1.7.dll", 0x5B3CC, 0x33B218;
+	byte level : "RSP 1.7.dll", 0x5B3CC, 0x32DDFA;
+	byte music : "RSP 1.7.dll", 0x5B3CC, 0x22261E;
+	int anim: "RSP 1.7.dll", 0x5B3CC, 0x33B17C;
+	int time: "RSP 1.7.dll", 0x5B3CC, 0x32D580;
 }
 
 startup
@@ -12,6 +12,8 @@ startup
     settings.Add("LI", false, "Enable Last Impact start mode");
 	settings.Add("DelA", false, "Delete File A on game reset");
 	settings.Add("LastSplit", true, "Split on final split when Grand Star or regular star was grabbed");
+	
+	refreshRate = 30;
 }
 
 init
@@ -19,11 +21,11 @@ init
 	vars.split = 0;
 	vars.delay = -1;
 	vars.lastSymbol = (char) 0;
+	vars.deleteFile = false;
 	
 	vars.errorCode = 0;
-	
 	vars.ResetIGTFixup = 0;
-	refreshRate = 60;
+	vars.forceSplit = false;
 }
 
 start
@@ -31,22 +33,26 @@ start
 	vars.split = 0;
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16);
-	else
+	else{
+		if(settings["DelA"] && current.level == 1 && old.time > current.time)
+			vars.deleteFile = true;
 		return (current.level == 1 && old.time > current.time);
+	}
 }
 
 reset
 {
+	String splitName = timer.CurrentSplit.Name;
+	char lastSymbol = splitName.Last();
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
 	}else if (current.level == 1 && old.time > current.time){
-		return true;
+		return lastSymbol != 'R';
 	}
 }
 
 split
 {
-	//print(current.anim.ToString());
 	if (vars.split == 0){
 		String splitName = timer.CurrentSplit.Name;
 		char lastSymbol = splitName.Last();
@@ -89,6 +95,14 @@ split
 			if (current.music == 0)
 				return true;
 		}
+		else if (lastSymbol == 'R')
+		{
+			print("Reset trigger!");
+			if (vars.forceSplit) {
+				vars.forceSplit = false;
+				return true;
+			}
+		}
 		else if (isKeySplit && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
 		{
 			print("Key split trigger!");
@@ -106,6 +120,7 @@ split
 
 	if (vars.split == 1)
 	{
+		vars.forceSplit = false;
 		String splitName = timer.CurrentSplit.Name;
 		if (current.level != old.level || (old.anim != current.anim && old.anim == 4866) || (old.anim != current.anim && old.anim == 4867) || (old.anim != current.anim && old.anim == 4871) || (old.anim != current.anim && old.anim == 4866)){
 			vars.split = -20;
@@ -122,55 +137,56 @@ split
 
 update
 {
-	if (settings["DelA"] && current.time < 200)
+	if (!vars.forceSplit)
+		vars.forceSplit = current.time < old.time;
+	if (vars.deleteFile)
 	{
-		vars.split = 0;
-		byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
-		//DeepPointer fileA = new DeepPointer("RSP 1.7.dll", 0x4C054, 0x207708); //TODO: this is better solution
-        IntPtr ptr;
+		if (timer.CurrentTime.RealTime.Value.TotalSeconds < 4) {
+			vars.split = 0;
+			byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
+			//DeepPointer fileA = new DeepPointer("Project64.exe", 0x4C054, 0x207708); //TODO: this is better solution
+			IntPtr ptr;
 		
-		var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "rsp 1.7.dll");
-		ptr = module.BaseAddress + 0x4C054;
+			var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "rsp 1.7.dll");
+			ptr = module.BaseAddress + 0x5B3CC;
 		
-		if (!game.ReadPointer(ptr, false, out ptr) || ptr == IntPtr.Zero)
-        {
-			vars.errorCode |= 1;
-		    print("readptr fail");
-        }
-		ptr += 0x207708;
-        if (!game.WriteBytes(ptr, data))
-        { 
-			vars.errorCode |= 2;
-		    print("write fail");
-        }
-		vars.delay = -1;
+			if (!game.ReadPointer(ptr, false, out ptr) || ptr == IntPtr.Zero)
+			{
+				vars.errorCode |= 1;
+				print("readptr fail");
+			}
+			ptr += 0x207708;
+			if (!game.WriteBytes(ptr, data))
+			{ 
+				vars.errorCode |= 2;
+				print("write fail");
+			}
+			vars.delay = -1;
+		}else{
+			if (timer.CurrentTime.RealTime.Value.TotalSeconds < 5)
+				vars.deleteFile = false;
+		}
 	}
-}
-
-isLoading
-{
-	return true;
 }
 
 gameTime
 {
-	int relaxMilliseconds = 5000;
-	int relaxFrames = relaxMilliseconds * 60 / 1000;
+		int relaxMilliseconds = 5000;
+		int relaxFrames = relaxMilliseconds * 60 / 1000;
 	
-	try{
-		if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
-			if (current.time < old.time) //Reset happened 
-			{ 
-				vars.ResetIGTFixup += old.time;
+		try{
+			if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
+				if (current.time < old.time) //Reset happened 
+				{ 
+					vars.ResetIGTFixup += old.time;
+				}
+			}else{
+				vars.ResetIGTFixup = 0;
+				if (current.time > relaxFrames)
+					return TimeSpan.FromMilliseconds(0); 
 			}
-		}else{
+		}catch(Exception) {
 			vars.ResetIGTFixup = 0;
-			if (current.time > relaxFrames)
-				return TimeSpan.FromMilliseconds(0); 
-		}
-	}catch(Exception) {
-		vars.ResetIGTFixup = 0;
-	}
-	
-	return TimeSpan.FromMilliseconds((vars.ResetIGTFixup + current.time) * 1000 / 60);
+		} 
+		return TimeSpan.FromMilliseconds((double)(vars.ResetIGTFixup + current.time) * 1000 / 60.0416);
 }

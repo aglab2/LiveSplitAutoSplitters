@@ -4,7 +4,7 @@ state("project64")
 	byte level : "Project64.exe", 0xD6A1C, 0x32DDFA;
 	byte music : "Project64.exe", 0xD6A1C, 0x22261E;
 	int anim: "Project64.exe", 0xD6A1C, 0x33B17C;
-	int time: "Project64.exe", 0xD6A1C, 0x32D580;
+	int time: "Project64.exe", 0xD6A1C, 0x32D5D4;
 	byte isPaused: "Project64.exe", 0xD75E4;
 }
 
@@ -21,6 +21,8 @@ init
 	vars.delay = -1;
 	vars.lastSymbol = (char) 0;
 	vars.deleteFile = false;
+	
+	refreshRate = 30;
 	
 	vars.errorCode = 0;
 	vars.ResetIGTFixup = 0;
@@ -57,10 +59,9 @@ split
 		char lastSymbol = splitName.Last();
 		bool isKeySplit = (splitName.ToLower().IndexOf("key") != -1) || (lastSymbol == '*');
 		
-		if (0 == 1 && timer.Run.Count - 1 == timer.CurrentSplitIndex && (current.anim == 6409 || current.anim == 6404 || current.anim == 4866 || current.anim == 4871))
+		if (settings["LastSplit"] && timer.Run.Count - 1 == timer.CurrentSplitIndex && (current.anim == 6409 || current.anim == 6404 || current.anim == 4866 || current.anim == 4871))
 		{
-			if (settings["LastSplit"])
-				return true;
+			return true;
 		}
 		else if (lastSymbol == ')' && old.Stars < current.Stars)
 		{
@@ -195,7 +196,7 @@ gameTime
 		}catch(Exception) {
 			vars.ResetIGTFixup = 0;
 		}
-		return TimeSpan.FromSeconds((double)(vars.ResetIGTFixup + current.time) / 60.0416);
+		return TimeSpan.FromSeconds((double)(vars.ResetIGTFixup + current.time) / 30);
 	}
 	else
 	{
