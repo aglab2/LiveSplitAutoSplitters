@@ -74,7 +74,7 @@ split
 			Int32.TryParse(splitStarCounts, out splitStarCount);
 			
 			if (splitStarCount == current.Stars && !isKeySplit) //Postpone key split to later
-				vars.split = 1;
+				return true;
 		} 
 		else if (lastSymbol == ']' && old.level != current.level)
 		{
