@@ -144,7 +144,7 @@ update
 		if (timer.CurrentTime.RealTime.Value.TotalSeconds < 4) {
 			vars.split = 0;
 			byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
-			//DeepPointer fileA = new DeepPointer("project64.exe", 0xD6A1C, 0x207708); //TODO: this is better solution
+			//DeepPointer fileA = new DeepPointer("project64.exe", 0xD6A1C, 0x57ca0); //TODO: this is better solution
 			IntPtr ptr;
 		
 			var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "project64.exe");
@@ -155,7 +155,7 @@ update
 				vars.errorCode |= 1;
 				print("readptr fail");
 			}
-			ptr += 0x207708;
+			ptr += 0x57ca0;
 			if (!game.WriteBytes(ptr, data))
 			{ 
 				vars.errorCode |= 2;
