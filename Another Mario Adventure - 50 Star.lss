@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Run version="1.7.0">
+  <GameIcon />
+  <GameName>Another Mario Adventure</GameName>
+  <CategoryName>50 Star</CategoryName>
+  <Metadata>
+    <Run id="" />
+    <Platform usesEmulator="False">
+    </Platform>
+    <Region>
+    </Region>
+    <Variables />
+  </Metadata>
+  <Offset>00:00:00</Offset>
+  <AttemptCount>6</AttemptCount>
+  <AttemptHistory>
+    <Attempt id="1" started="08/23/2020 12:12:33" isStartedSynced="True" ended="08/23/2020 12:12:40" isEndedSynced="True" />
+    <Attempt id="2" started="08/23/2020 12:13:02" isStartedSynced="True" ended="08/23/2020 12:13:07" isEndedSynced="True" />
+    <Attempt id="3" started="08/23/2020 12:30:11" isStartedSynced="True" ended="08/23/2020 12:31:10" isEndedSynced="True" />
+    <Attempt id="4" started="09/12/2020 17:48:32" isStartedSynced="True" ended="09/12/2020 18:26:38" isEndedSynced="True">
+      <RealTime>00:38:05.6790000</RealTime>
+    </Attempt>
+    <Attempt id="5" started="09/12/2020 18:29:10" isStartedSynced="True" ended="09/12/2020 18:30:03" isEndedSynced="True" />
+    <Attempt id="6" started="09/12/2020 18:32:36" isStartedSynced="True" ended="09/12/2020 19:08:04" isEndedSynced="True">
+      <RealTime>00:35:27.4330000</RealTime>
+    </Attempt>
+  </AttemptHistory>
+  <Segments>
+    <Segment>
+      <Name>Mountain Above The Clouds (3)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:01:52.6860000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:52.6860000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:01:56.9240000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:01:52.6860000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>The Classic Stage (6)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:03:23.6560000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:30.9700000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:01:45.5430000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:01:30.9700000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>City in the Sky (10)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:06:16.0800000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:52.4240000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:03:12.5550000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:02:52.4240000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Wing Cap (11)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:07:22.5710000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:06.4910000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:01:13.1880000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:01:06.4910000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Vintage Castle (13)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:08:38.9260000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:15.2470000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:01:15.2470000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:01:16.3550000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Bustin' Dusk Beach (18)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:11:07.2210000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:28.2950000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:02:40.4100000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:02:28.2950000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Brinstar Jungle (22)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:14:04.3760000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:31.2110000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:02:31.2110000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:02:57.1550000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Enter Lava</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:15:14.2910000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:00:27.4170000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:00:27.4170000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:01:09.9150000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Autumn Mountain (27)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:03:58.6610000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:03:58.6610000</RealTime>
+        </Time>
+        <Time id="6" />
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Hang Mystic Mansion (29)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:19:44.2000000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:02.2250000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:01:02.2250000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:04:29.9090000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Dragon Road Chun-Nan (33)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:22:04.7260000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:20.5260000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:02:20.5260000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Colorful Pyramid Desert (38)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:24:33.1380000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:28.4120000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:02:28.4120000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Metal Cap (39)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:25:10.4140000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:00:37.2760000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:00:37.2760000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Treetrunk Valley (43)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:27:48.2580000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:37.8440000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:02:37.8440000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Enter Ice</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:28:22.0930000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:00:33.8350000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:00:33.8350000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Burning Arctic Caverns (46)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:29:45.1420000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:23.0490000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:01:23.0490000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Cryptic Phosphor Tower (50)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:31:29.2000000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:44.0580000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="0" />
+        <Time id="6">
+          <RealTime>00:01:44.0580000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>Ice Mines (K1)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:33:13.0400000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:43.8400000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:01:58.1730000</RealTime>
+        </Time>
+        <Time id="0">
+          <RealTime>00:15:21.2590000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:01:43.8400000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+    <Segment>
+      <Name>done (done)</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:35:27.4330000</RealTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:14.3930000</RealTime>
+      </BestSegmentTime>
+      <SegmentHistory>
+        <Time id="4">
+          <RealTime>00:02:41.0390000</RealTime>
+        </Time>
+        <Time id="6">
+          <RealTime>00:02:14.3930000</RealTime>
+        </Time>
+      </SegmentHistory>
+    </Segment>
+  </Segments>
+  <AutoSplitterSettings />
+</Run>
