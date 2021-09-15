@@ -155,7 +155,7 @@ update
 				vars.errorCode |= 1;
 				print("readptr fail");
 			}
-			ptr += 0x207708;
+			ptr += 0x207b08;
 			if (!game.WriteBytes(ptr, data))
 			{ 
 				vars.errorCode |= 2;
