@@ -31,7 +31,6 @@ init
 
 start
 {
-	print(old.time.ToString() + " " + current.time.ToString() + " " + current.level.ToString());
 	vars.split = 0;
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16);
