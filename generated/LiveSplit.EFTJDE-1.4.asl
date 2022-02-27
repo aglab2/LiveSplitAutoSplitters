@@ -1,10 +1,10 @@
 state("project64")
 {
-	byte Stars : "project64.exe", 0xD6A1C, 0x190c28;
-	byte level : "project64.exe", 0xD6A1C, 0x18238a;
-	byte music : "project64.exe", 0xD6A1C, 0x9e3c2;
-	int anim: "project64.exe", 0xD6A1C, 0x190b8c;
-	int time: "project64.exe", 0xD6A1C, 0xd23d0;
+	byte Stars : "project64.exe", 0xD6A1C, 0x190978;
+	byte level : "project64.exe", 0xD6A1C, 0x18213A;
+	byte music : "project64.exe", 0xD6A1C, 0x9e3C2;
+	int anim: "project64.exe", 0xD6A1C, 0x1908dC;
+	int time: "project64.exe", 0xD6A1C, 0xd2010;
 	byte isPaused: "project64.exe", 0xD75E4;
 }
 
@@ -12,7 +12,7 @@ startup
 {
     settings.Add("LI", false, "Enable Last Impact start mode");
 	settings.Add("DelA", false, "Delete File A on game reset");
-	settings.Add("LastSplit", true, "Split on final split when Grand Star or regular star was grabbed");
+	settings.Add("LastSplit", false, "Split on final split when Grand Star or regular star was grabbed");
 }
 
 init
@@ -31,13 +31,14 @@ init
 
 start
 {
+	print(old.time.ToString() + " " + current.time.ToString() + " " + current.level.ToString());
 	vars.split = 0;
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16);
 	else{
-		if(settings["DelA"] && current.level <= 1 && old.time > current.time)
+		if(settings["DelA"] && current.level == 1 && (old.time > current.time || old.time == 0))
 			vars.deleteFile = true;
-		return (current.level <= 1 && old.time > current.time);
+		return (current.level == 1 && (old.time > current.time || old.time == 0));
 	}
 }
 
@@ -47,7 +48,7 @@ reset
 	char lastSymbol = splitName.Last();
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.Stars == 0);
-	}else if (current.level <= 1 && old.time > current.time){
+	}else if (current.level == 1 && (old.time > current.time || old.time == 0)){
 		return lastSymbol != 'R';
 	}
 }
