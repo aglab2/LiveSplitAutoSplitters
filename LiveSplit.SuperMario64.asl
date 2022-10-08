@@ -103,7 +103,7 @@ split
 				return true;
 			}
 		}
-		else if (isKeySplit && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
+		else if (isKeySplit && (current.level == 30 || current.level == 33 || current.level == 34) && old.anim != current.anim && current.anim == 4866) //Key grab animation == 4866
 		{
 			print("Key split trigger!");
 			char[] separators = {'(', ')', '[', ']', '*'};
