@@ -76,7 +76,7 @@ split
 			if (splitStarCount == current.Stars && !isKeySplit) //Postpone key split to later
 				vars.split = 1;
 		} 
-		else if (lastSymbol == ']' && old.level != current.level)
+		else if (lastSymbol == ']' && old.level != current.level && old.level != 1)
 		{
 			print("Level trigger!");
 			char[] separators = {'(', ')', '[', ']'};
