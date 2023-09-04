@@ -1,12 +1,5 @@
-state("project64")
-{
-	byte Stars : 0xD6A1C, 0x33B218;
-	byte level : "project64.exe", 0xD6A1C, 0x32DDFA;
-	byte music : "project64.exe", 0xD6A1C, 0x22261E;
-	int anim: "project64.exe", 0xD6A1C, 0x33B17C;
-	int time: "project64.exe", 0xD6A1C, 0x32D580;
-	byte isPaused: "project64.exe", 0xD75E4;
-}
+state("project64") { }
+state("retroarch") { }
 
 startup
 {
@@ -27,6 +20,19 @@ init
 	vars.errorCode = 0;
 	vars.ResetIGTFixup = 0;
 	vars.forceSplit = false;
+
+    vars.baseRAMAddressFound  = false;
+    vars.stopwatch = new Stopwatch();
+    vars.ADDRESS_SEARCH_INTERVAL = 1000;
+    vars.baseRAMAddress = IntPtr.Zero;
+	
+    vars.retroarch = false;
+	if (game.ProcessName.Contains("retroarch"))
+	{
+		vars.retroarch = true;
+	}
+	
+	vars.verifyRetriesLeft = 0;
 }
 
 start
@@ -46,7 +52,7 @@ reset
 	String splitName = timer.CurrentSplit.Name;
 	char lastSymbol = splitName.Last();
 	if (settings["LI"]){
-		return (old.level == 35 && current.level == 16 && current.Stars == 0);
+		return (old.level == 35 && current.level == 16 && current.stars == 0);
 	}else if (current.level == 1 && old.time > current.time){
 		return lastSymbol != 'R';
 	}
@@ -63,7 +69,7 @@ split
 		{
 			return true;
 		}
-		else if (lastSymbol == ')' && old.Stars < current.Stars)
+		else if (lastSymbol == ')' && old.stars < current.stars)
 		{
 			print("Star trigger!");
 			char[] separators = {'(', ')', '[', ']'};
@@ -73,7 +79,7 @@ split
 			int splitStarCount = -1;
 			Int32.TryParse(splitStarCounts, out splitStarCount);
 			
-			if (splitStarCount == current.Stars && !isKeySplit) //Postpone key split to later
+			if (splitStarCount == current.stars && !isKeySplit) //Postpone key split to later
 				vars.split = 1;
 		} 
 		else if (lastSymbol == ']' && old.level != current.level)
@@ -113,7 +119,7 @@ split
 			int splitStarCount = -1;
 			Int32.TryParse(splitStarCounts, out splitStarCount);
 			
-			if (splitStarCount == current.Stars)
+			if (splitStarCount == current.stars)
 				vars.split = 5;
 		}
 	}
@@ -137,6 +143,112 @@ split
 
 update
 {
+	if (!vars.retroarch)
+	{
+		if (!vars.baseRAMAddressFound)
+		{
+			if (!vars.stopwatch.IsRunning || vars.stopwatch.ElapsedMilliseconds > vars.ADDRESS_SEARCH_INTERVAL)
+			{
+				vars.stopwatch.Start();
+				vars.baseRAMAddress = IntPtr.Zero;
+
+				// hardcoded values because GetSystemInfo / GetNativeSystemInfo can't return info for remote process
+				var min = 0x10000L;
+				var max = game.Is64Bit() ? 0x00007FFFFFFEFFFFL : 0xFFFFFFFFL;
+
+				var mbiSize = (UIntPtr) 0x30; // Clueless
+
+				var addr = min;
+				do
+				{
+					MemoryBasicInformation mbi;
+					if (WinAPI.VirtualQueryEx(game.Handle, (IntPtr)addr, out mbi, mbiSize) == (UIntPtr)0)
+						break;
+
+					addr += (long)mbi.RegionSize;
+
+					if (mbi.State != MemPageState.MEM_COMMIT)
+						continue;
+
+					if ((mbi.Protect & MemPageProtect.PAGE_GUARD) != 0)
+						continue;
+
+					if (mbi.Type != MemPageType.MEM_PRIVATE)
+						continue;
+					
+					if (((int) mbi.Protect & (int) 0xcc) == 0)
+						continue;
+
+					uint val;
+					if (!game.ReadValue(mbi.BaseAddress, out val))
+					{
+						continue;
+					}
+					if ((val & 0xfffff000) == 0x3C1A8000)
+					{
+						vars.baseRAMAddress = mbi.BaseAddress;
+						break;
+					}
+				} while (addr < max);
+
+				if (vars.baseRAMAddress == IntPtr.Zero)
+				{
+					vars.stopwatch.Restart();
+					return false;
+				}
+				else
+				{
+					vars.stopwatch.Reset();
+					vars.baseRAMAddressFound = true;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		// todo: cba
+		return false;
+	}
+
+	// Verify base RAM address is still valid on each update
+	uint tval;
+	if (!game.ReadValue((IntPtr) vars.baseRAMAddress, out tval))
+	{
+		vars.baseRAMAddressFound = false;
+		vars.baseRAMAddress = IntPtr.Zero;
+		return false;
+	}
+
+	if ((tval & 0xfffff000) != 0x3C1A8000)
+	{
+		if (0 == (vars.verifyRetriesLeft--))
+		{
+			vars.baseRAMAddressFound = false;
+			vars.baseRAMAddress = IntPtr.Zero;
+		}
+		return false;
+	}
+	else
+	{
+		vars.verifyRetriesLeft = 100;
+	}
+
+	vars.starsAddress = vars.baseRAMAddress + 0x33B218;
+	vars.levelAddress = vars.baseRAMAddress + 0x32DDFA;
+	vars.musicAddress = vars.baseRAMAddress + 0x22261E;
+	vars.animAddress  = vars.baseRAMAddress + 0x33B17C;
+	vars.timeAddress  = vars.baseRAMAddress + 0x32D580;
+	
+	current.stars = memory.ReadValue<byte>((IntPtr) vars.starsAddress);
+	current.level = memory.ReadValue<byte>((IntPtr) vars.levelAddress);
+	current.music = memory.ReadValue<byte>((IntPtr) vars.musicAddress);
+	current.anim  = memory.ReadValue<int> ((IntPtr) vars.animAddress);
+	current.time  = memory.ReadValue<int> ((IntPtr) vars.timeAddress);
+	
 	if (!vars.forceSplit)
 		vars.forceSplit = current.time < old.time;
 	if (vars.deleteFile)
@@ -144,18 +256,7 @@ update
 		if (timer.CurrentTime.RealTime.Value.TotalSeconds < 4) {
 			vars.split = 0;
 			byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
-			//DeepPointer fileA = new DeepPointer("project64.exe", 0xD6A1C, 0x207708); //TODO: this is better solution
-			IntPtr ptr;
-		
-			var module =  modules.FirstOrDefault(m => m.ModuleName.ToLower() == "project64.exe");
-			ptr = module.BaseAddress + 0xD6A1C;
-		
-			if (!game.ReadPointer(ptr, false, out ptr) || ptr == IntPtr.Zero)
-			{
-				vars.errorCode |= 1;
-				print("readptr fail");
-			}
-			ptr += 0x207708;
+			IntPtr ptr = vars.baseRAMAddress + 0x207708;
 			if (!game.WriteBytes(ptr, data))
 			{ 
 				vars.errorCode |= 2;
@@ -171,35 +272,28 @@ update
 
 isLoading
 {
-	return current.isPaused == 0;
+	return true;
 }
 
 gameTime
 {
-	if (current.isPaused == 0) 
-	{
-		int relaxMilliseconds = 5000;
-		int relaxFrames = relaxMilliseconds * 60 / 1000;
-	
-		try{
-			if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
-				if (current.time < old.time) //Reset happened 
-				{ 
-					print("Fixup occured");
-					vars.ResetIGTFixup += old.time;
-				}
-			}else{
-				vars.ResetIGTFixup = 0;
-				if (current.time > relaxFrames)
-					return TimeSpan.FromMilliseconds(0);
+	int relaxMilliseconds = 5000;
+	int relaxFrames = relaxMilliseconds * 60 / 1000;
+
+	try{
+		if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
+			if (current.time < old.time) //Reset happened 
+			{ 
+				print("Fixup occured");
+				vars.ResetIGTFixup += old.time;
 			}
-		}catch(Exception) {
+		}else{
 			vars.ResetIGTFixup = 0;
+			if (current.time > relaxFrames)
+				return TimeSpan.FromMilliseconds(0);
 		}
-		return TimeSpan.FromSeconds((double)(vars.ResetIGTFixup + current.time) / 60.0416);
+	}catch(Exception) {
+		vars.ResetIGTFixup = 0;
 	}
-	else
-	{
-		vars.ResetIGTFixup = (double) timer.CurrentTime.GameTime.Value.TotalSeconds * 60.0416 - current.igt;
-	}
+	return TimeSpan.FromSeconds((double)(vars.ResetIGTFixup + current.time) / 60.0416);
 }

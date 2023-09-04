@@ -16,7 +16,7 @@ init
 
 start
 {
-	return current.time > 5;
+	return 5 < current.time && current.time < 20;
 }
 
 reset
