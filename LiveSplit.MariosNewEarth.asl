@@ -41,9 +41,9 @@ start
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16);
 	else{
-		if(settings["DelA"] && (current.level == 1 || current.level == 0) && current.time < 20)
+		if(settings["DelA"] && current.level == 1 && old.time > current.time)
 			vars.deleteFile = true;
-		return ((current.level == 1 || current.level == 0) && current.time < 20);
+		return (current.level == 1 && old.time > current.time);
 	}
 }
 
@@ -53,7 +53,7 @@ reset
 	char lastSymbol = splitName.Last();
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.stars == 0);
-	}else if ((current.level == 1 || current.level == 0) && (old.time > current.time)){
+	}else if (current.level == 1 && old.time > current.time){
 		return lastSymbol != 'R';
 	}
 }
@@ -82,7 +82,7 @@ split
 			if (splitStarCount == current.stars && !isKeySplit) //Postpone key split to later
 				vars.split = 1;
 		} 
-		else if (lastSymbol == ']' && old.level != current.level)
+		else if (lastSymbol == ']' && old.level != current.level && old.level != 1)
 		{
 			print("Level trigger!");
 			char[] separators = {'(', ')', '[', ']'};
@@ -237,11 +237,11 @@ update
 		vars.verifyRetriesLeft = 100;
 	}
 
-	vars.starsAddress = vars.baseRAMAddress + 0x33B218;
-	vars.levelAddress = vars.baseRAMAddress + 0x32DDFA;
-	vars.musicAddress = vars.baseRAMAddress + 0x22261E;
-	vars.animAddress  = vars.baseRAMAddress + 0x33B17C;
-	vars.timeAddress  = vars.baseRAMAddress + 0x32D580;
+	vars.starsAddress = vars.baseRAMAddress + 0x1caff5;
+	vars.levelAddress = vars.baseRAMAddress + 0x1bd2c3;
+	vars.musicAddress = vars.baseRAMAddress + 0xe1382;
+	vars.animAddress  = vars.baseRAMAddress + 0x1caf58;
+	vars.timeAddress  = vars.baseRAMAddress + 0x10d030;
 	
 	current.stars = memory.ReadValue<byte>((IntPtr) vars.starsAddress);
 	current.level = memory.ReadValue<byte>((IntPtr) vars.levelAddress);
@@ -255,8 +255,8 @@ update
 	{
 		if (timer.CurrentTime.RealTime.Value.TotalSeconds < 4) {
 			vars.split = 0;
-			byte[] data = Enumerable.Repeat((byte)0x00, 0x70).ToArray();
-			IntPtr ptr = vars.baseRAMAddress + 0x207708;
+			byte[] data = Enumerable.Repeat((byte)0x00, 0x78).ToArray();
+			IntPtr ptr = vars.baseRAMAddress + 0x4cda0;
 			if (!game.WriteBytes(ptr, data))
 			{ 
 				vars.errorCode |= 2;
