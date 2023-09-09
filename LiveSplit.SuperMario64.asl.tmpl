@@ -253,7 +253,7 @@ update
 		vars.forceSplit = current.time < old.time;
 	if (vars.deleteFile)
 	{{
-		if (timer.CurrentTime.RealTime.Value.TotalSeconds < 4) {{
+		if (current.time < 4 * 60) {{
 			vars.split = 0;
 			byte[] data = Enumerable.Repeat((byte)0x00, 0x{gSaveBufferSize:x}).ToArray();
 			IntPtr ptr = vars.baseRAMAddress + 0x{gSaveBuffer:x};
@@ -264,7 +264,7 @@ update
 			}}
 			vars.delay = -1;
 		}}else{{
-			if (timer.CurrentTime.RealTime.Value.TotalSeconds < 5)
+			if (current.time < 5 * 60)
 				vars.deleteFile = false;
 		}}
 	}}
