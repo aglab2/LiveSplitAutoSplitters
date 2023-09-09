@@ -3,6 +3,8 @@
   <GameIcon />
   <GameName>Another Mario Adventure</GameName>
   <CategoryName>50 Star</CategoryName>
+  <LayoutPath>
+  </LayoutPath>
   <Metadata>
     <Run id="" />
     <Platform usesEmulator="False">
@@ -12,7 +14,7 @@
     <Variables />
   </Metadata>
   <Offset>00:00:00</Offset>
-  <AttemptCount>6</AttemptCount>
+  <AttemptCount>52</AttemptCount>
   <AttemptHistory>
     <Attempt id="1" started="08/23/2020 12:12:33" isStartedSynced="True" ended="08/23/2020 12:12:40" isEndedSynced="True" />
     <Attempt id="2" started="08/23/2020 12:13:02" isStartedSynced="True" ended="08/23/2020 12:13:07" isEndedSynced="True" />
@@ -24,10 +26,55 @@
     <Attempt id="6" started="09/12/2020 18:32:36" isStartedSynced="True" ended="09/12/2020 19:08:04" isEndedSynced="True">
       <RealTime>00:35:27.4330000</RealTime>
     </Attempt>
+    <Attempt id="7" started="09/09/2023 09:29:20" isStartedSynced="True" ended="09/09/2023 09:30:45" isEndedSynced="True" />
+    <Attempt id="8" started="09/09/2023 09:31:02" isStartedSynced="True" ended="09/09/2023 09:31:04" isEndedSynced="True" />
+    <Attempt id="9" started="09/09/2023 09:32:50" isStartedSynced="True" ended="09/09/2023 09:33:02" isEndedSynced="True" />
+    <Attempt id="10" started="09/09/2023 09:34:12" isStartedSynced="True" ended="09/09/2023 09:34:31" isEndedSynced="True" />
+    <Attempt id="11" started="09/09/2023 09:36:18" isStartedSynced="True" ended="09/09/2023 09:36:36" isEndedSynced="True" />
+    <Attempt id="12" started="09/09/2023 09:36:36" isStartedSynced="True" ended="09/09/2023 09:36:45" isEndedSynced="True" />
+    <Attempt id="13" started="09/09/2023 09:36:45" isStartedSynced="True" ended="09/09/2023 09:36:54" isEndedSynced="True" />
+    <Attempt id="14" started="09/09/2023 09:37:13" isStartedSynced="True" ended="09/09/2023 09:37:19" isEndedSynced="True" />
+    <Attempt id="15" started="09/09/2023 09:38:00" isStartedSynced="True" ended="09/09/2023 09:38:01" isEndedSynced="True" />
+    <Attempt id="16" started="09/09/2023 09:38:03" isStartedSynced="True" ended="09/09/2023 09:38:04" isEndedSynced="True" />
+    <Attempt id="17" started="09/09/2023 09:38:06" isStartedSynced="True" ended="09/09/2023 09:38:10" isEndedSynced="True" />
+    <Attempt id="18" started="09/09/2023 09:38:10" isStartedSynced="True" ended="09/09/2023 09:38:12" isEndedSynced="True" />
+    <Attempt id="19" started="09/09/2023 09:38:12" isStartedSynced="True" ended="09/09/2023 09:38:14" isEndedSynced="True" />
+    <Attempt id="20" started="09/09/2023 09:38:14" isStartedSynced="True" ended="09/09/2023 09:38:16" isEndedSynced="True" />
+    <Attempt id="21" started="09/09/2023 09:38:39" isStartedSynced="True" ended="09/09/2023 09:38:45" isEndedSynced="True" />
+    <Attempt id="22" started="09/09/2023 09:41:08" isStartedSynced="True" ended="09/09/2023 09:41:28" isEndedSynced="True" />
+    <Attempt id="23" started="09/09/2023 09:41:34" isStartedSynced="True" ended="09/09/2023 09:41:34" isEndedSynced="True" />
+    <Attempt id="24" started="09/09/2023 09:41:38" isStartedSynced="True" ended="09/09/2023 09:41:40" isEndedSynced="True" />
+    <Attempt id="25" started="09/09/2023 09:41:40" isStartedSynced="True" ended="09/09/2023 09:41:44" isEndedSynced="True" />
+    <Attempt id="26" started="09/09/2023 09:41:44" isStartedSynced="True" ended="09/09/2023 09:41:44" isEndedSynced="True" />
+    <Attempt id="27" started="09/09/2023 09:43:59" isStartedSynced="True" ended="09/09/2023 09:44:02" isEndedSynced="True" />
+    <Attempt id="28" started="09/09/2023 09:44:02" isStartedSynced="True" ended="09/09/2023 09:44:04" isEndedSynced="True" />
+    <Attempt id="29" started="09/09/2023 09:44:04" isStartedSynced="True" ended="09/09/2023 09:44:07" isEndedSynced="True" />
+    <Attempt id="30" started="09/09/2023 09:44:07" isStartedSynced="True" ended="09/09/2023 09:44:11" isEndedSynced="True" />
+    <Attempt id="31" started="09/09/2023 09:44:11" isStartedSynced="True" ended="09/09/2023 09:44:13" isEndedSynced="True" />
+    <Attempt id="32" started="09/09/2023 09:44:13" isStartedSynced="True" ended="09/09/2023 09:44:16" isEndedSynced="True" />
+    <Attempt id="33" started="09/09/2023 09:44:16" isStartedSynced="True" ended="09/09/2023 09:44:18" isEndedSynced="True" />
+    <Attempt id="34" started="09/09/2023 09:44:18" isStartedSynced="True" ended="09/09/2023 09:44:21" isEndedSynced="True" />
+    <Attempt id="35" started="09/09/2023 09:44:21" isStartedSynced="True" ended="09/09/2023 09:44:23" isEndedSynced="True" />
+    <Attempt id="36" started="09/09/2023 09:44:23" isStartedSynced="True" ended="09/09/2023 09:44:26" isEndedSynced="True" />
+    <Attempt id="37" started="09/09/2023 09:44:26" isStartedSynced="True" ended="09/09/2023 09:44:28" isEndedSynced="True" />
+    <Attempt id="38" started="09/09/2023 09:44:28" isStartedSynced="True" ended="09/09/2023 09:44:30" isEndedSynced="True" />
+    <Attempt id="39" started="09/09/2023 09:44:30" isStartedSynced="True" ended="09/09/2023 09:44:32" isEndedSynced="True" />
+    <Attempt id="40" started="09/09/2023 09:44:32" isStartedSynced="True" ended="09/09/2023 09:44:34" isEndedSynced="True" />
+    <Attempt id="41" started="09/09/2023 09:44:34" isStartedSynced="True" ended="09/09/2023 09:44:37" isEndedSynced="True" />
+    <Attempt id="42" started="09/09/2023 09:44:37" isStartedSynced="True" ended="09/09/2023 09:44:39" isEndedSynced="True" />
+    <Attempt id="43" started="09/09/2023 09:44:39" isStartedSynced="True" ended="09/09/2023 09:44:41" isEndedSynced="True" />
+    <Attempt id="44" started="09/09/2023 09:44:41" isStartedSynced="True" ended="09/09/2023 09:44:43" isEndedSynced="True" />
+    <Attempt id="45" started="09/09/2023 09:44:43" isStartedSynced="True" ended="09/09/2023 09:44:44" isEndedSynced="True" />
+    <Attempt id="46" started="09/09/2023 09:53:29" isStartedSynced="True" ended="09/09/2023 09:53:38" isEndedSynced="True" />
+    <Attempt id="47" started="09/09/2023 09:55:33" isStartedSynced="True" ended="09/09/2023 09:58:48" isEndedSynced="True" />
+    <Attempt id="48" started="09/09/2023 09:59:08" isStartedSynced="True" ended="09/09/2023 09:59:50" isEndedSynced="True" />
+    <Attempt id="49" started="09/09/2023 09:59:50" isStartedSynced="True" ended="09/09/2023 10:10:04" isEndedSynced="True" />
+    <Attempt id="50" started="09/09/2023 10:12:21" isStartedSynced="True" ended="09/09/2023 10:12:51" isEndedSynced="True" />
+    <Attempt id="51" started="09/09/2023 10:12:51" isStartedSynced="True" ended="09/09/2023 10:13:57" isEndedSynced="True" />
   </AttemptHistory>
   <Segments>
     <Segment>
-      <Name>Mountain Above The Clouds (3)</Name>
+      <Name>xd (1)</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best">
@@ -35,7 +82,8 @@
         </SplitTime>
       </SplitTimes>
       <BestSegmentTime>
-        <RealTime>00:01:52.6860000</RealTime>
+        <RealTime>00:00:58.1411161</RealTime>
+        <GameTime>00:00:52.6670000</GameTime>
       </BestSegmentTime>
       <SegmentHistory>
         <Time id="4">
@@ -43,6 +91,14 @@
         </Time>
         <Time id="6">
           <RealTime>00:01:52.6860000</RealTime>
+        </Time>
+        <Time id="49">
+          <RealTime>00:07:51.5108360</RealTime>
+          <GameTime>00:00:52.6670000</GameTime>
+        </Time>
+        <Time id="51">
+          <RealTime>00:00:58.1411161</RealTime>
+          <GameTime>00:00:52.9330000</GameTime>
         </Time>
       </SegmentHistory>
     </Segment>
@@ -360,11 +416,11 @@
         <RealTime>00:01:43.8400000</RealTime>
       </BestSegmentTime>
       <SegmentHistory>
-        <Time id="4">
-          <RealTime>00:01:58.1730000</RealTime>
-        </Time>
         <Time id="0">
           <RealTime>00:15:21.2590000</RealTime>
+        </Time>
+        <Time id="4">
+          <RealTime>00:01:58.1730000</RealTime>
         </Time>
         <Time id="6">
           <RealTime>00:01:43.8400000</RealTime>

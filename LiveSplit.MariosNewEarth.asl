@@ -237,23 +237,30 @@ update
 		vars.verifyRetriesLeft = 100;
 	}
 
-	vars.starsAddress = vars.baseRAMAddress + 0x1caff5;
-	vars.levelAddress = vars.baseRAMAddress + 0x1bd2c3;
+	vars.starsAddress = vars.baseRAMAddress + 0x1caff4;
+	vars.levelAddress = vars.baseRAMAddress + 0x1bd2c2;
 	vars.musicAddress = vars.baseRAMAddress + 0xe1382;
 	vars.animAddress  = vars.baseRAMAddress + 0x1caf58;
 	vars.timeAddress  = vars.baseRAMAddress + 0x10d030;
-	
+	vars.igtSaveFileAddress    = vars.baseRAMAddress + 0x4CDA4;
+	vars.igtTimerOffsetAddress = vars.baseRAMAddress + 0x1bd2bc;
+	vars.igtGlobalTimerAddress = vars.baseRAMAddress + 0x1bd1c0;
+
 	current.stars = memory.ReadValue<byte>((IntPtr) vars.starsAddress);
 	current.level = memory.ReadValue<byte>((IntPtr) vars.levelAddress);
 	current.music = memory.ReadValue<byte>((IntPtr) vars.musicAddress);
 	current.anim  = memory.ReadValue<int> ((IntPtr) vars.animAddress);
 	current.time  = memory.ReadValue<int> ((IntPtr) vars.timeAddress);
+
+	current.igtSaveFile    = memory.ReadValue<int>((IntPtr) vars.igtSaveFileAddress);
+	current.igtTimerOffset = memory.ReadValue<int>((IntPtr) vars.igtTimerOffsetAddress);
+	current.igtGlobalTimer = memory.ReadValue<int>((IntPtr) vars.igtGlobalTimerAddress);
 	
 	if (!vars.forceSplit)
 		vars.forceSplit = current.time < old.time;
 	if (vars.deleteFile)
 	{
-		if (timer.CurrentTime.RealTime.Value.TotalSeconds < 4) {
+		if (current.time < 4 * 60) {
 			vars.split = 0;
 			byte[] data = Enumerable.Repeat((byte)0x00, 0x78).ToArray();
 			IntPtr ptr = vars.baseRAMAddress + 0x4cda0;
@@ -264,7 +271,7 @@ update
 			}
 			vars.delay = -1;
 		}else{
-			if (timer.CurrentTime.RealTime.Value.TotalSeconds < 5)
+			if (current.time < 5 * 60)
 				vars.deleteFile = false;
 		}
 	}
@@ -277,23 +284,13 @@ isLoading
 
 gameTime
 {
-	int relaxMilliseconds = 5000;
-	int relaxFrames = relaxMilliseconds * 60 / 1000;
-
-	try{
-		if (timer.CurrentTime.RealTime.Value.TotalMilliseconds > relaxMilliseconds) {
-			if (current.time < old.time) //Reset happened 
-			{ 
-				print("Fixup occured");
-				vars.ResetIGTFixup += old.time;
-			}
-		}else{
-			vars.ResetIGTFixup = 0;
-			if (current.time > relaxFrames)
-				return TimeSpan.FromMilliseconds(0);
-		}
-	}catch(Exception) {
-		vars.ResetIGTFixup = 0;
+	if (current.igtTimerOffset == 0 || current.level == 1)
+	{
+		return TimeSpan.FromSeconds(current.igtSaveFile / 30.0);
 	}
-	return TimeSpan.FromSeconds((double)(vars.ResetIGTFixup + current.time) / 60.0416);
+	else
+	{
+		return TimeSpan.FromSeconds((current.igtSaveFile + current.igtGlobalTimer - current.igtTimerOffset) / 30.0);
+	}
+
 }
