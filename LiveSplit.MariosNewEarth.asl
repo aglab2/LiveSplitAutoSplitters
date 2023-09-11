@@ -41,9 +41,9 @@ start
 	if (settings["LI"])
 		return (old.level == 35 && current.level == 16);
 	else{
-		if(settings["DelA"] && (current.level == 1 || current.level == 0) && old.time > current.time)
+		if(settings["DelA"] && (current.level == 1 || current.level == 0) && current.time < 20)
 			vars.deleteFile = true;
-		return ((current.level == 1 || current.level == 0) && old.time > current.time);
+		return ((current.level == 1 || current.level == 0) && current.time < 20);
 	}
 }
 
@@ -53,7 +53,7 @@ reset
 	char lastSymbol = splitName.Last();
 	if (settings["LI"]){
 		return (old.level == 35 && current.level == 16 && current.stars == 0);
-	}else if ((current.level == 1 || current.level == 0) && old.time > current.time){
+	}else if ((current.level == 1 || current.level == 0) && (old.time > current.time)){
 		return lastSymbol != 'R';
 	}
 }
