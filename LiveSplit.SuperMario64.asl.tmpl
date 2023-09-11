@@ -143,15 +143,15 @@ split
 
 update
 {{
-	if (!vars.retroarch)
+	if (!vars.baseRAMAddressFound)
 	{{
-		if (!vars.baseRAMAddressFound)
+		if (!vars.stopwatch.IsRunning || vars.stopwatch.ElapsedMilliseconds > vars.ADDRESS_SEARCH_INTERVAL)
 		{{
-			if (!vars.stopwatch.IsRunning || vars.stopwatch.ElapsedMilliseconds > vars.ADDRESS_SEARCH_INTERVAL)
-			{{
-				vars.stopwatch.Start();
-				vars.baseRAMAddress = IntPtr.Zero;
+			vars.stopwatch.Start();
+			vars.baseRAMAddress = IntPtr.Zero;
 
+			if (!vars.retroarch)
+			{{
 				// hardcoded values because GetSystemInfo / GetNativeSystemInfo can't return info for remote process
 				var min = 0x10000L;
 				var max = game.Is64Bit() ? 0x00007FFFFFFEFFFFL : 0xFFFFFFFFL;
@@ -191,27 +191,42 @@ update
 					}}
 				}} while (addr < max);
 
-				if (vars.baseRAMAddress == IntPtr.Zero)
-				{{
-					vars.stopwatch.Restart();
-					return false;
-				}}
-				else
-				{{
-					vars.stopwatch.Reset();
-					vars.baseRAMAddressFound = true;
-				}}
 			}}
 			else
 			{{
+				var parallelModule = modules.Where(x => x.ModuleName.Contains("parallel_n64")).First();
+				var parallelStart = (long) parallelModule.BaseAddress;
+				for (long num = 0; num < (long) parallelModule.ModuleMemorySize / 0x1000; num++)
+				{{
+					uint val;
+					var addr = (IntPtr) (parallelStart + num * 0x1000);
+					if (!game.ReadValue(addr, out val))
+					{{
+						continue;
+					}}
+					if ((val & 0xfffff000) == 0x3C1A8000)
+					{{
+						vars.baseRAMAddress = addr;
+						break;
+					}}
+				}}
+			}}
+
+			if (vars.baseRAMAddress == IntPtr.Zero)
+			{{
+				vars.stopwatch.Restart();
 				return false;
 			}}
+			else
+			{{
+				vars.stopwatch.Reset();
+				vars.baseRAMAddressFound = true;
+			}}
 		}}
-	}}
-	else
-	{{
-		// todo: cba
-		return false;
+		else
+		{{
+			return false;
+		}}
 	}}
 
 	// Verify base RAM address is still valid on each update
