@@ -258,7 +258,7 @@ update
 	vars.animAddress  = vars.baseRAMAddress + 0x33B17C;
 	vars.timeAddress  = vars.baseRAMAddress + 0x32D580;
 	
-	current.stars = memory.ReadValue<byte>((IntPtr) vars.starsAddress);
+	current.stars = memory.ReadValue<short>((IntPtr) vars.starsAddress);
 	current.level = memory.ReadValue<byte>((IntPtr) vars.levelAddress);
 	current.music = memory.ReadValue<byte>((IntPtr) vars.musicAddress);
 	current.anim  = memory.ReadValue<int> ((IntPtr) vars.animAddress);
